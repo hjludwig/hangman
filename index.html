@@ -8,13 +8,31 @@
     <title>Hangman</title>
 </head>
 <body>
-    <div class="hangman">
-        <div class="man"></div>
-        <div class="platform"></div>
+    <div class="input">
+        <form>
+            <p>Enter a word.</p>
+            <input type="text" name="user-word" id="user-word">
+            <button type="button">Submit</button>
+        </form>
     </div>
-    <div class="game-area">
-        <div class="word"></div>
-        <div class="wrong-guesses"></div>
+    <div class="game">
+        <div class="hangman">
+            <div class="man">
+                <div class="head"></div>
+                <div class="body"></div>
+                <div class="arm-r"></div>
+                <div class="arm-l"></div>
+                <div class="leg-r"></div>
+                <div class="leg-l"></div>
+            </div>
+            <div class="platform"></div>
+        </div>
+        <div class="puzzle">
+            <div class="word"></div>
+            <div class="wrong-guesses"></div>
+        </div>
     </div>
+
+
 </body>
 </html>
