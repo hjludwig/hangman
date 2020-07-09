@@ -43,7 +43,7 @@ body {
 .puzzle {
     border: 1px solid #ccc;
     height: 30vh;
-
+    display: flex;
 
 }
 .word {
@@ -56,7 +56,6 @@ body {
 }
 .wrong-guesses {
     width: 20%;
-    background-color: pink;
 }
 .letter {
     font-size: 3rem;
