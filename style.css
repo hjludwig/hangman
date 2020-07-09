@@ -3,6 +3,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+body {
+    font-family: "Roboto", sans-serif;
+}
 .input {
     width: 100%;
     height: 100vh;
@@ -10,6 +13,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: absolute;
 }
 .game {
     /* display: flex;
@@ -39,4 +43,31 @@
 .puzzle {
     border: 1px solid #ccc;
     height: 30vh;
+
+
+}
+.word {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.wrong-guesses {
+    width: 20%;
+    background-color: pink;
+}
+.letter {
+    font-size: 3rem;
+    width: 4rem;
+    height: 4rem;
+    display: inline-block;
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0 1rem;
+}
+.letter.hidden-letter {
+    color: white;
+    border-bottom: 3px solid black;
 }
