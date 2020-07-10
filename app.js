@@ -20,6 +20,7 @@ function startPuzzle() {
     let lettersArray = word.split("");
     let lettersGuessed = [];
     let counter = 0;
+    let correctGuesses = 0;
 
     // Add letters to word area
     lettersArray.forEach(letter => {
@@ -46,11 +47,12 @@ function startPuzzle() {
             }
             else {
                 checkLetter(lettersInPlay, guess);
-
+                checkWin();
                 if (tester === false) {
                     addWrongLetter(guess);
                     
                     hangmanParts[counter].classList.add('show');
+                    
 
                     // Check if player is out of guesses
                     if (counter === hangmanParts.length -1) {
@@ -67,6 +69,7 @@ function startPuzzle() {
                 if (puzzleLetter.textContent === letter) {
                     puzzleLetter.classList.remove('hidden-letter');
                     tester = true;
+                    correctGuesses++;
                     return tester;
                 }
             });
@@ -76,6 +79,11 @@ function startPuzzle() {
             wrongLetter.textContent = letter;
             wrongLetter.classList.add('wrong-letter')
             wrongGuessArea.appendChild(wrongLetter);
+        }
+        function checkWin() {
+            if (correctGuesses === lettersInPlay.length) {
+                alert("You win!");
+            }
         }
     }
 }
