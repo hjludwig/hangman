@@ -3,6 +3,7 @@ const submitButton = document.querySelector('.submit-button');
 const userInput = document.querySelector('#user-word');
 const inputForm = document.querySelector('.input');
 const wrongGuessArea = document.querySelector('.wrong-guesses');
+const messageArea = document.querySelector('.message-area');
 
 // Get hangman parts
 const head = document.querySelector('.head');
@@ -38,12 +39,14 @@ function startPuzzle() {
 
         let tester = false;
         
+        messageArea.parentNode.classList.add('hidden');
+
         runTest();
         lettersGuessed.push(guess);
 
         function runTest() {
             if (lettersGuessed.indexOf(guess) != -1) {
-                alert("You've already tried that one.");
+                createMessage('You already tried that letter.', 'dismiss');
             }
             else {
                 checkLetter(lettersInPlay, guess);
@@ -56,7 +59,7 @@ function startPuzzle() {
 
                     // Check if player is out of guesses
                     if (counter === hangmanParts.length -1) {
-                        alert("Out of guesses");
+                        createMessage('Out of guesses, you lose!', "reset");
                     } else {
                         counter++;
                     }
@@ -82,12 +85,43 @@ function startPuzzle() {
         }
         function checkWin() {
             if (correctGuesses === lettersInPlay.length) {
-                alert("You win!");
+                createMessage('You Win!', 'reset');
             }
+        }
+        function createMessage(message, buttonType) {
+            if (messageArea.hasChildNodes()) {
+                messageArea.childNodes.forEach( node => {
+                    node.remove();
+                })
+            }
+            let p = messageArea.appendChild( document.createElement('p'));
+            p.textContent = message;
+            
+            let button = messageArea.appendChild( document.createElement('button'));
+            button.setAttribute('type', 'button');
+            button.textContent = "Okay";
+
+            if (buttonType === 'reset') {
+                button.addEventListener('click', resetGame);
+            } else if (buttonType === 'dismiss') {
+                button.addEventListener('click', () => {
+                    messageArea.parentNode.classList.add('hidden');
+                    messageArea.childNodes.forEach( node => {
+                        node.remove();
+                    })
+                })
+            }
+
+            messageArea.parentNode.classList.remove('hidden');
         }
     }
 }
 submitButton.addEventListener('click', startPuzzle);
+
+function resetGame() {
+    alert("Time for a reset");
+}
+
 
 
 
