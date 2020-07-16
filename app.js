@@ -13,7 +13,7 @@ const rightArm = document.querySelector('.arm-r');
 const leftLeg = document.querySelector('.leg-l');
 const rightLeg = document.querySelector('.leg-r');
 
-const hangmanParts = document.querySelector('.man').children;
+const hangmanParts = Array.from(document.querySelector('.man').children);
 
 function startPuzzle() {
     let word = userInput.value;
@@ -23,13 +23,9 @@ function startPuzzle() {
     let counter = 0;
     let correctGuesses = 0;
 
-    // Add letters to word area
-    lettersArray.forEach(letter => {
-        let newSpan = document.createElement('span');
-        newSpan.textContent = letter;
-        newSpan.classList.add('letter', 'hidden-letter');
-        wordArea.appendChild(newSpan);
-    });
+    clearMessageArea();
+    addLetters();
+
     // Start testing the letters
     document.addEventListener('keydown', testLetterGuess);
 
@@ -37,9 +33,7 @@ function startPuzzle() {
         let guess = event.key;
         let lettersInPlay = document.querySelectorAll('.letter');
 
-        let tester = false;
-        
-        messageArea.parentNode.classList.add('hidden');
+        let tester = false;        
 
         runTest();
         lettersGuessed.push(guess);
@@ -59,7 +53,7 @@ function startPuzzle() {
 
                     // Check if player is out of guesses
                     if (counter === hangmanParts.length -1) {
-                        createMessage('Out of guesses, you lose!', "reset");
+                        createMessage('Out of guesses, you lose!', 'reset');
                     } else {
                         counter++;
                     }
@@ -67,6 +61,7 @@ function startPuzzle() {
                 }
             }
         }
+
         function checkLetter(puzzle, letter) {
             puzzle.forEach(puzzleLetter => {
                 if (puzzleLetter.textContent === letter) {
@@ -104,22 +99,46 @@ function startPuzzle() {
             if (buttonType === 'reset') {
                 button.addEventListener('click', resetGame);
             } else if (buttonType === 'dismiss') {
-                button.addEventListener('click', () => {
-                    messageArea.parentNode.classList.add('hidden');
-                    messageArea.childNodes.forEach( node => {
-                        node.remove();
-                    })
-                })
+                button.addEventListener('click', clearMessageArea);
             }
 
             messageArea.parentNode.classList.remove('hidden');
         }
     }
+    function addLetters() {
+        lettersArray.forEach(letter => {
+            let newSpan = document.createElement('span');
+            newSpan.textContent = letter;
+            newSpan.classList.add('letter', 'hidden-letter');
+            wordArea.appendChild(newSpan);
+        }); 
+    }
 }
 submitButton.addEventListener('click', startPuzzle);
 
+function clearMessageArea() {
+    if (messageArea.hasChildNodes()) {
+        messageArea.childNodes.forEach( node => {
+            node.remove();
+        });
+        messageArea.parentNode.classList.add('hidden');
+    }
+}
 function resetGame() {
-    alert("Time for a reset");
+    word = '';
+    userInput.value = '';
+    inputForm.style.display = 'flex';
+    inputForm.classList.remove('hidden');
+    clearMessageArea();
+    messageArea.parentNode.classList.add('hidden');
+    hangmanParts.forEach( part => {
+        part.classList.remove('show');
+    });
+    wrongGuessArea.innerHTML = '';
+    wordArea.innerHTML = '';
+    // let lettersGuessed = [];
+    // let counter = 0;
+    // let correctGuesses = 0;
 }
 
 
